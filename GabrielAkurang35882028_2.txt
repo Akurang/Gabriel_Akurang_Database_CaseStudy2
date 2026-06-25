@@ -291,4 +291,10 @@ MariaDB [project_schema]> select empno, totalhours
 15 rows in set (0.001 sec)
 
 
+A materialized view store the view as a temporary table in the database when the view is first queried.
+The base table Part is not needed when the effect of the update does not satisfy the condition in the view.
+For instance, partcost<= 1000 inserted, deleted or updated will not make any changes to the view.
+A challenge occurs when partCost >= 1000 or a modification of partNNo is made due to the distinct key word.
+
+
 
