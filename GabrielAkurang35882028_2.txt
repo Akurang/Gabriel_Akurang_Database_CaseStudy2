@@ -61,5 +61,91 @@ MariaDB [project_schema]> ALTER TABLE employee
 Query OK, 0 rows affected (0.234 sec)              
 Records: 0  Duplicates: 0  Warnings: 0
 
+MariaDB [project_schema]> SET FOREIGN_KEY_CHECKS = 0;
+Query OK, 0 rows affected (0.002 sec)
+
+MariaDB [project_schema]> INSERT INTO Department (deptNo, deptName, mgrEmpNo) VALUES
+    -> ('D1', 'Human Resources', 'E1'),
+    -> ('D2', 'Research & Development', 'E2'),
+    -> ('D3', 'Information Technology', 'E3'),
+    -> ('D4', 'Marketing & Sales', 'E4'),
+    -> ('D5', 'Finance & Accounting', 'E5'),
+    -> ('D6', 'Customer Operations', 'E6'),
+    -> ('D7', 'Data Analytics', 'E18');
+Query OK, 7 rows affected (0.002 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+MariaDB [project_schema]> INSERT INTO employee (empNo, fName, lName, address, DOB, sex, position, depNo) VALUES
+    -> ('E1', 'John', 'Doe', '123 Elm St, Accra', '1980-05-15', 'M', 'Manager', 'D1'),
+    -> ('E2', 'Jane', 'Smith', '456 Oak St, Kumasi', '1985-08-22', 'F', 'Manager', 'D2'),
+    -> ('E3', 'Robert', 'Johnson', '789 Pine St, Tamale', '1978-11-30', 'M', 'Manager', 'D3'),
+    -> ('E4', 'Emily', 'Davis', '321 Maple Dr, Takoradi', '1990-03-10', 'F', 'Team Leader', 'D4'),
+    -> ('E5', 'Michael', 'Brown', '654 Cedar Ln, Tema', '1992-07-19', 'M', 'Team Leader', 'D5'),
+    -> ('E6', 'Sarah', 'Wilson', '987 Birch Ave, Cape Coast', '1988-12-05', 'F', 'Team Leader', 'D6'),
+    -> ('E7', 'David', 'Taylor', '147 Palm St, Accra', '1995-01-25', 'M', 'Analyst', 'D1'),
+    -> ('E8', 'Amanda', 'Thomas', '258 Rose Rd, Kumasi', '1993-09-14', 'F', 'Analyst', 'D1'),
+    -> ('E9', 'James', 'Anderson', '369 Lily Ln, Sunyani', '1994-04-18', 'M', 'Analyst', 'D2'),
+    -> ('E10', 'Jessica', 'Jackson', '159 Sunflower Dr, Koforidua', '1991-06-29', 'F', 'Software Developer', 'D2'),
+    -> ('E11', 'Daniel', 'White', '260 Orchid St, Ho', '1996-10-12', 'M', 'Software Developer', 'D2'),
+    -> ('E12', 'Megan', 'Harris', '361 Daisy Rd, Bolgatanga', '1997-02-03', 'F', 'Software Developer', 'D3'),
+    -> ('E13', 'Kevin', 'Martin', '462 Jasmine Ct, Wa', '1995-11-21', 'M', 'Software Developer', 'D3'),
+    -> ('E14', 'Rachel', 'Clark', '563 Tulip Ave, Techiman', '1993-08-08', 'F', 'Software Developer', 'D3'),
+    -> ('E15', 'William', 'Lewis', '664 Marigold Blvd, Tema', '1994-12-12', 'M', 'Software Developer', 'D3'),
+    -> ('E16', 'Oliver', 'Green', '775 Lavender Ln, Kasoa', '1995-04-11', 'M', 'Software Developer', 'D4'),
+    -> ('E17', 'Laura', 'Baker', '886 Mint St, Ashaiman', '1996-07-22', 'F', 'Analyst', 'D5'),
+    -> ('E18', 'Simon', 'Ward', '997 Sage Rd, Obuasi', '1992-10-05', 'M', 'Team Leader', 'D7');
+Query OK, 18 rows affected (0.002 sec)
+Records: 18  Duplicates: 0  Warnings: 0
+
+MariaDB [project_schema]> INSERT INTO Project (projNo, projName, deptNo) VALUES
+    -> ('P1', 'Talent Acquisition System', 'D1'),
+    -> ('P2', 'Employee Wellness Initiative', 'D1'),
+    -> ('P3', 'Next-Gen Core Engine', 'D2'),
+    -> ('P4', 'AI Predictive Modeling', 'D2'),
+    -> ('P5', 'Cloud Infrastructure Migration', 'D3'),
+    -> ('P6', 'Database Security Hardening', 'D3'),
+    -> ('P7', 'Global Brand Campaign', 'D4'),
+    -> ('P8', 'Digital Ads Optimization', 'D4'),
+    -> ('P9', 'Automated Billing Portal', 'D5'),
+    -> ('P10', 'Risk Assessment Engine', 'D5'),
+    -> ('P11', 'CRM Gateway Upgrade', 'D6'),
+    -> ('P12', 'Support Ticket Bot', 'D6'),
+    -> ('P13', 'BI Metrics Dashboard', 'D7'),
+    -> ('P14', 'Data Pipeline Processing', 'D7'),
+    -> ('P15', 'Enterprise Firewall Upgrade', 'D3');
+Query OK, 15 rows affected (0.002 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+MariaDB [project_schema]> INSERT INTO WorksOn (empNo, projNo, dateWorked, hoursWorked) VALUES
+    -> ('E4', 'P1', '2026-01-10', 35),
+    -> ('E4', 'P2', '2026-01-17', 5),
+    -> ('E7', 'P1', '2026-01-10', 40),
+    -> ('E8', 'P2', '2026-01-12', 20),
+    -> ('E8', 'P7', '2026-01-15', 20),
+    -> ('E5', 'P3', '2026-02-01', 30),
+    -> ('E5', 'P4', '2026-02-08', 10),
+    -> ('E9', 'P3', '2026-02-01', 40),
+    -> ('E10', 'P4', '2026-02-03', 25),
+    -> ('E10', 'P9', '2026-02-10', 15),
+    -> ('E11', 'P10', '2026-02-15', 38),
+    -> ('E6', 'P5', '2026-03-01', 32),
+    -> ('E6', 'P6', '2026-03-08', 8),
+    -> ('E12', 'P5', '2026-03-01', 40),
+    -> ('E13', 'P6', '2026-03-05', 35),
+    -> ('E13', 'P15', '2026-03-12', 5),
+    -> ('E14', 'P11', '2026-03-15', 40),
+    -> ('E15', 'P12', '2026-03-20', 20),
+    -> ('E16', 'P7', '2026-01-22', 25),
+    -> ('E16', 'P8', '2026-01-29', 15),
+    -> ('E17', 'P13', '2026-02-18', 30),
+    -> ('E17', 'P14', '2026-02-25', 10),
+    -> ('E18', 'P13', '2026-02-12', 15),
+    -> ('E14', 'P12', '2026-03-22', 18);
+Query OK, 24 rows affected (0.002 sec)
+Records: 24  Duplicates: 0  Warnings: 0
+
+MariaDB [project_schema]> SET FOREIGN_KEY_CHECKS = 1;
+Query OK, 0 rows affected (0.000 sec)
+
 
 
