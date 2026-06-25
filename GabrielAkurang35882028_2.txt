@@ -51,4 +51,15 @@ MariaDB [project_schema]> create table WorksOn(
     -> Foreign key(projNo) references Project(projNo));
 Query OK, 0 rows affected (0.119 sec)
 
+MariaDB [project_schema]> ALTER TABLE employee DROP FOREIGN KEY fk_depNo;
+Query OK, 0 rows affected (0.269 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [project_schema]> ALTER TABLE employee 
+    -> ADD CONSTRAINT fk_depNo 
+    -> FOREIGN KEY (depNo) REFERENCES Department(deptNo);
+Query OK, 0 rows affected (0.234 sec)              
+Records: 0  Duplicates: 0  Warnings: 0
+
+
 
