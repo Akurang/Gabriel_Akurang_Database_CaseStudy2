@@ -148,4 +148,147 @@ MariaDB [project_schema]> SET FOREIGN_KEY_CHECKS = 1;
 Query OK, 0 rows affected (0.000 sec)
 
 
+MariaDB [project_schema]> create view femProject as
+    -> select projNo, projName, project.deptNo
+    -> from project, employee, department
+    -> where Project.deptNo = Department.deptNo
+    -> and Employee.empNo = Department.mgrEmpNo
+    -> and Employee.sex = 'F'
+    -> order by projNo;
+Query OK, 0 rows affected (0.098 sec)
+
+
+MariaDB [project_schema]> select * from femProject
+    -> ;
++--------+--------------------------+--------+
+| projNo | projName                 | deptNo |
++--------+--------------------------+--------+
+| P11    | CRM Gateway Upgrade      | D6     |
+| P12    | Support Ticket Bot       | D6     |
+| P3     | Next-Gen Core Engine     | D2     |
+| P4     | AI Predictive Modeling   | D2     |
+| P7     | Global Brand Campaign    | D4     |
+| P8     | Digital Ads Optimization | D4     |
++--------+--------------------------+--------+
+6 rows in set (0.005 sec)
+
+
+MariaDB [project_schema]> create view newProject as
+    -> select e.empNo, e.fName, e.lName, p.projName, w.hoursWorked
+    -> from employee e, project p, workson w
+    -> where e.empNo = w.empNo
+    -> and p.projNo = w.projNo;
+Query OK, 0 rows affected (0.096 sec)
+
+MariaDB [project_schema]> select * from newproject;
++-------+---------+----------+--------------------------------+-------------+
+| empNo | fName   | lName    | projName                       | hoursWorked |
++-------+---------+----------+--------------------------------+-------------+
+| E10   | Jessica | Jackson  | AI Predictive Modeling         |          25 |
+| E10   | Jessica | Jackson  | Automated Billing Portal       |          15 |
+| E11   | Daniel  | White    | Risk Assessment Engine         |          38 |
+| E12   | Megan   | Harris   | Cloud Infrastructure Migration |          40 |
+| E13   | Kevin   | Martin   | Enterprise Firewall Upgrade    |           5 |
+| E13   | Kevin   | Martin   | Database Security Hardening    |          35 |
+| E14   | Rachel  | Clark    | CRM Gateway Upgrade            |          40 |
+| E14   | Rachel  | Clark    | Support Ticket Bot             |          18 |
+| E15   | William | Lewis    | Support Ticket Bot             |          20 |
+| E16   | Oliver  | Green    | Global Brand Campaign          |          25 |
+| E16   | Oliver  | Green    | Digital Ads Optimization       |          15 |
+| E17   | Laura   | Baker    | BI Metrics Dashboard           |          30 |
+| E17   | Laura   | Baker    | Data Pipeline Processing       |          10 |
+| E18   | Simon   | Ward     | BI Metrics Dashboard           |          15 |
+| E4    | Emily   | Davis    | Talent Acquisition System      |          35 |
+| E4    | Emily   | Davis    | Employee Wellness Initiative   |           5 |
+| E5    | Michael | Brown    | Next-Gen Core Engine           |          30 |
+| E5    | Michael | Brown    | AI Predictive Modeling         |          10 |
+| E6    | Sarah   | Wilson   | Cloud Infrastructure Migration |          32 |
+| E6    | Sarah   | Wilson   | Database Security Hardening    |           8 |
+| E7    | David   | Taylor   | Talent Acquisition System      |          40 |
+| E8    | Amanda  | Thomas   | Employee Wellness Initiative   |          20 |
+| E8    | Amanda  | Thomas   | Global Brand Campaign          |          20 |
+| E9    | James   | Anderson | Next-Gen Core Engine           |          40 |
++-------+---------+----------+--------------------------------+-------------+
+24 rows in set (0.001 sec)
+
+
+MariaDB [project_schema]> CREATE VIEW EmpProject(empNo, projNo, totalHours)
+    -> AS SELECT w.empNo, w.projNo, SUM(hoursWorked)
+    -> FROM Employee e, Project p, WorksOn w
+    -> WHERE e.empNo = w.empNo 
+    -> AND p.projNo = w.projNo
+    -> GROUP BY w.empNo, w.projNo;
+Query OK, 0 rows affected (0.143 sec)
+
+MariaDB [project_schema]> select * from empproject;
++-------+--------+------------+
+| empNo | projNo | totalHours |
++-------+--------+------------+
+| E10   | P4     |         25 |
+| E10   | P9     |         15 |
+| E11   | P10    |         38 |
+| E12   | P5     |         40 |
+| E13   | P15    |          5 |
+| E13   | P6     |         35 |
+| E14   | P11    |         40 |
+| E14   | P12    |         18 |
+| E15   | P12    |         20 |
+| E16   | P7     |         25 |
+| E16   | P8     |         15 |
+| E17   | P13    |         30 |
+| E17   | P14    |         10 |
+| E18   | P13    |         15 |
+| E4    | P1     |         35 |
+| E4    | P2     |          5 |
+| E5    | P3     |         30 |
+| E5    | P4     |         10 |
+| E6    | P5     |         32 |
+| E6    | P6     |          8 |
+| E7    | P1     |         40 |
+| E8    | P2     |         20 |
+| E8    | P7     |         20 |
+| E9    | P3     |         40 |
++-------+--------+------------+
+24 rows in set (0.001 sec)
+
+
+MariaDB [project_schema]> select projNo from empproject 
+    -> where projNo = 'SCCS';
+Empty set (0.005 sec)
+
+
+MariaDB [project_schema]> select count(projNo)  from empProject where empNo = 'E1';
++---------------+
+| count(projNo) |
++---------------+
+|             0 |
++---------------+
+1 row in set (0.004 sec)
+
+
+MariaDB [project_schema]> select empno, totalhours
+    -> from empproject
+    -> group by empno;
++-------+------------+
+| empno | totalhours |
++-------+------------+
+| E10   |         25 |
+| E11   |         38 |
+| E12   |         40 |
+| E13   |          5 |
+| E14   |         40 |
+| E15   |         20 |
+| E16   |         25 |
+| E17   |         30 |
+| E18   |         15 |
+| E4    |         35 |
+| E5    |         30 |
+| E6    |         32 |
+| E7    |         40 |
+| E8    |         20 |
+| E9    |         40 |
++-------+------------+
+15 rows in set (0.001 sec)
+
+
 
