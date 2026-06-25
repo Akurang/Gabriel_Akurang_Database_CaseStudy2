@@ -1,3 +1,6 @@
+Gabriel Akurang 35882028 Cohort A
+
+
 MariaDB [hotelSystem]> create database project_schema;
 Query OK, 1 row affected (0.002 sec)
 
