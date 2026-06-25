@@ -1,0 +1,54 @@
+MariaDB [hotelSystem]> create database project_schema;
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [hotelSystem]> use project_schema;
+Database changed
+
+MariaDB [project_schema]> create table employee(
+    -> empNo varchar(3) not null,
+    -> fName varchar(50),
+    -> lName varchar(50),
+    -> address varchar (200),
+    -> DOB date,
+    -> sex char(1) not null check (sex in ('M','F')),
+    -> position varchar(30) check (position in ('Manager', 'Team Leader', 'Analyst', 'Software Developer')),
+    -> Primary key (empNo));
+Query OK, 0 rows affected (0.119 sec)
+
+MariaDB [project_schema]> create table Department(
+    -> deptNo varchar(3) not null,
+    -> deptName varchar(50),
+    -> mgrEmpNo varchar(3) not null,
+    -> Primary key (deptNo),
+    -> Foreign key (mgrEmpNo) references Employee(empNo));
+Query OK, 0 rows affected (0.124 sec)
+
+MariaDB [project_schema]> alter table employee add column depNo varchar(3);
+Query OK, 0 rows affected (0.262 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [project_schema]> alter table employee
+    -> add constraint fk_depNo
+    -> Foreign key (depNo) references employee(empNo);
+Query OK, 0 rows affected (0.240 sec)              
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [project_schema]> create table Project(
+    -> projNo varchar(3) not null,
+    -> projName varchar(50),
+    -> deptNo varchar(3),
+    -> Primary key(projNo),
+    -> Foreign key (deptNo) references Department(deptNo));
+Query OK, 0 rows affected (0.120 sec)
+
+MariaDB [project_schema]> create table WorksOn(
+    -> empNo varchar(3) Not null,
+    -> projNo varchar(3),
+    -> dateWorked date,
+    -> hoursWorked int(2) check(hoursWorked between 0 and 40),
+    -> Primary key (empNo, projNo, dateWorked),
+    -> Foreign key(empNo) references Employee(empNo),
+    -> Foreign key(projNo) references Project(projNo));
+Query OK, 0 rows affected (0.119 sec)
+
+
